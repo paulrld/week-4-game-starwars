@@ -51,38 +51,44 @@
     </div>
     <div class="row">
       <div class="col-md-6" id="image-section">
-        <div class="col-sm-3" id="crystal-image1">
-          <p>test</p>
-        </div>
-        <div class="col-sm-3" id="crystal-image2">
-          <p>test</p>
-        </div>
-        <div class="col-sm-3" id="crystal-image3">
-          <p>test</p>
-        </div>
-        <div class="col-sm-3" id="crystal-image4">
-          <p>test</p>
-        </div>
+
       </div>
       <div class="col-md-6" id="main-sec">
-        <button id="attackButton">Attack</button>
+
 
       </div>
     </div>
     <div class="row">
       <div class="col-md-3" id="main-sec">
-        <p id="score-header" class="">Your total score is:</p>
-        <p id="score">0</p>
+        <button id="attackButton">Attack</button>
       </div>
       <div class="col-md-9" id="main-sec">
 
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-3"  id="crystals">
+        <p>monkey</p>
+      </div>
+      <div class="col-md-9" id="main-sec">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"  id="crystals2">
+        <p>monkey</p>
+      </div>
+      <div class="col-md-9" id="main-sec">
+
+      </div>
+    </div>       
   </div>
 
   <!-- Note that this div is now empty. We will fill it dynamically -->
-  <div id="crystals">
+  <!-- <div id="crystals">
   </div>
+  <div id="crystals2">
+  </div> -->
 
   <!-- JAVASCRIPT  -->
   <!-- ========================================= -->
@@ -101,7 +107,7 @@ window.onload = function() {
 
   $("#crystal-image3").click(battling);*/
 
-  $(".characters").click(buttontest);
+  $(".characterContainer").click(buttontest);
   $("#attackButton").click(battling);
 };
 
@@ -113,6 +119,7 @@ var inBattle = 0;
 var characterChosen = [];
 var enemyChosen = [];
 var attackCounter=0;
+var monkey;
     //testing playerselected
     /*var healthPoints = [120, 100, 150, 180];
     var attackPower = [8,5,20,25]
@@ -178,14 +185,19 @@ var attackCounter=0;
       }
 
     };
+
+    createAttributes()
   // Next we create a for loop to create crystals for every numberOption.
-  for (var i = 0; i < Object.keys(characters).length; i++) {
+  function createAttributes() {
+    for (var i = 0; i < Object.keys(characters).length; i++) {
 
     // For each iteration, we will create an imageCrystal
+    var divContainer = $("<div>");
     var character = $("<img>");
     var getCharacterKey = characters[Object.keys(characters)[i]]
     // First each character will be given the class ".characters".
     // This will allow the CSS to take effect.
+    divContainer.addClass("characterContainer");
     character.addClass("characters");
 
     // Each character will be given a src link to a respective character image
@@ -198,22 +210,43 @@ var attackCounter=0;
     character.attr("data-attackpower", getCharacterKey.attackPower);
     character.attr("data-counterattackpower", getCharacterKey.counterAttackPower);
 
-    var stringID = "#crystal-image"+(i+1);
+    var stringID = "#image-section";
     // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
-    $(stringID).append(character);
+    divContainer.append(character)
+    $(stringID).append(divContainer);
   }
 
+}
 
-  function buttontest () {
-    var charName=($(this).attr("data-name"))
-    var charHealthPoints=($(this).attr("data-healthpoints"));
-    var charAttackPower=($(this).attr("data-attackpower"));
-    var charCounterAttackPower=($(this).attr("data-counterattackpower"));
+function resetGame() {
+ characterSelected = 0;
+ enemySelected = 0;
+ win = 0;
+ lose = 0;
+ inBattle = 0;
+ characterChosen = [];
+ enemyChosen = [];
+ attackCounter=0;
+ createAttributes() 
+ $(".characterContainer").click(buttontest);
+}
+function buttontest () {
+  $(this).off('click');
+  var charName=($(this).children().attr("data-name"))
+  var charHealthPoints=($(this).children().attr("data-healthpoints"));
+  var charAttackPower=($(this).children().attr("data-attackpower"));
+  var charCounterAttackPower=($(this).children().attr("data-counterattackpower"));
 /*    console.log(charHealthPoints)
     console.log(charAttackPower)
     console.log(charCounterAttackPower)*/
+    console.log($(this))
+    console.log($(this).children())
+    console.log($(this).siblings())
+    monkey=$(this)
+    var getThisCharacter=$(this)
 
-
+    
+    /*$(this).siblings()*/
     /*charHealthPoints++;*/
     if (characterSelected===0){
       console.log("setting character to 1")
@@ -222,6 +255,11 @@ var attackCounter=0;
       console.log("selected character")
       characterChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
       console.log("moving enemies for selection")
+      var lengthOfSiblings=getThisCharacter.siblings().length;
+      for (var i = 0; i < lengthOfSiblings; i++) {
+        console.log(i)
+        $(getThisCharacter.siblings()[0]).appendTo("#crystals")
+      }
     }
     else if (enemySelected===0 && characterSelected === 1) {
       enemySelected = 1;
@@ -229,6 +267,8 @@ var attackCounter=0;
       battling = 1;
       enemyChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
       //enable attack button
+      getThisCharacter.appendTo("#crystals2")
+
     }
     else if (battling===1) {
 
@@ -260,6 +300,7 @@ var attackCounter=0;
         enemySelected = 0;
         console.log("choose next enemy")
         enemyChosen = [];
+        $("#crystals2").html("")
 
       }
       else {
@@ -269,6 +310,8 @@ var attackCounter=0;
 
     }
   }
+
+
 </script> 
 </body>
 </html>

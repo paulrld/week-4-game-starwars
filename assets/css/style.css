@@ -34,3 +34,6 @@
     .crystal-image  {
     cursor: pointer;
 }
+.characterContainer {
+    float:left;
+}
