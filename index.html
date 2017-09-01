@@ -65,6 +65,7 @@
         </div>
       </div>
       <div class="col-md-6" id="main-sec">
+        <button id="attackButton">Attack</button>
 
       </div>
     </div>
@@ -94,13 +95,14 @@ window.onload = function() {
 
   //  Click events are done for us:
 
-  $("#crystal-image1").click(selectCharacter);
+/*  $("#crystal-image1").click(selectCharacter);
 
   $("#crystal-image2").click(selectEnemy);
 
-  $("#crystal-image3").click(battling);
+  $("#crystal-image3").click(battling);*/
 
   $(".characters").click(buttontest);
+  $("#attackButton").click(battling);
 };
 
 var characterSelected = 0;
@@ -108,8 +110,9 @@ var enemySelected = 0;
 var win = 0;
 var lose = 0;
 var inBattle = 0;
-
-
+var characterChosen = [];
+var enemyChosen = [];
+var attackCounter=0;
     //testing playerselected
     /*var healthPoints = [120, 100, 150, 180];
     var attackPower = [8,5,20,25]
@@ -190,6 +193,7 @@ var inBattle = 0;
 
     // Each imageCrystal will be given attributes
     // This data attribute will be set equal to the array value.
+    character.attr("data-name", getCharacterKey.name);
     character.attr("data-healthpoints", getCharacterKey.healthPoints);
     character.attr("data-attackpower", getCharacterKey.attackPower);
     character.attr("data-counterattackpower", getCharacterKey.counterAttackPower);
@@ -200,42 +204,71 @@ var inBattle = 0;
   }
 
 
-  console.log("monkey")
+  function buttontest () {
+    var charName=($(this).attr("data-name"))
+    var charHealthPoints=($(this).attr("data-healthpoints"));
+    var charAttackPower=($(this).attr("data-attackpower"));
+    var charCounterAttackPower=($(this).attr("data-counterattackpower"));
+/*    console.log(charHealthPoints)
+    console.log(charAttackPower)
+    console.log(charCounterAttackPower)*/
 
-  function selectCharacter () {
+
+    /*charHealthPoints++;*/
     if (characterSelected===0){
       console.log("setting character to 1")
       characterSelected = 1;
       //insert moving stuff for selecting enemies
       console.log("selected character")
+      characterChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
       console.log("moving enemies for selection")
     }
-  }
-
-  function selectEnemy () {
-    if (enemySelected===0 && characterSelected === 1) {
+    else if (enemySelected===0 && characterSelected === 1) {
       enemySelected = 1;
       console.log("move enemy to battle")
       battling = 1;
+      enemyChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
+      //enable attack button
+    }
+    else if (battling===1) {
+
+
     }
   }
 
-  function battling () {
-    if (battling===1) {
-      enemySelected = 1;
-      console.log("attacking")
+  function battling() {
+
+    if (characterSelected===0){
+      console.log("No character selected")
+    }
+    else if (enemySelected===0 && characterSelected === 1) {
+      console.log("No enemy selected")
+    }
+    else if (battling===1) {
+      attackCounter++;
+      var charHealthPoints = characterChosen[1]
+      var enemyHealthPoints = enemyChosen[1]
+      var characterAttackPower = characterChosen[2]*attackCounter
+      var enemyCounterAttackPower = enemyChosen[3]
+
+      enemyChosen[1]=enemyHealthPoints-characterAttackPower
+      console.log(characterChosen)
+      console.log(enemyChosen)
+      console.log("character did " + characterAttackPower + " damage")
+
+      if(enemyChosen[1]<=0) {
+        enemySelected = 0;
+        console.log("choose next enemy")
+        enemyChosen = [];
+
+      }
+      else {
+        characterChosen[1]=charHealthPoints-enemyCounterAttackPower
+      }
+
+
     }
   }
-
-  function buttontest () {
-    var charHealthPoints=($(this).attr("data-healthpoints"));
-    var charAttackPower=($(this).attr("data-attackpower"));
-    var charCounterAttackPower=($(this).attr("data-counterattackpower"));
-    console.log(charHealthPoints)
-    console.log(charAttackPower)
-    console.log(charCounterAttackPower)
-  }
-
 </script> 
 </body>
 </html>
