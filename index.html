@@ -146,51 +146,56 @@ var inBattle = 0;
         name: "Obi-Wan Kenobi",
         healPoints: 120,
         attackPower: 8,
-        counterAttackPower: 8
+        counterAttackPower: 8,
+        imagePath:"assets/images/obi-wan-kenobi.jpg"
       },
       char2: {
         name: "Luke Skywalker",
         health: 100,
         attackPower: 5,
-        counterAttackPower: 5
+        counterAttackPower: 5,
+        imagePath:"assets/images/luke-skywalker.jpg"
       },
       char3: {
         name: "Darth Sidious",
         health: 150,
         attackPower: 20,
-        counterAttackPower: 20
+        counterAttackPower: 20,
+        imagePath:"assets/images/darth-sidius.jpg"
       },
       char4: {
         name: "Darth Maul",
         health: 180,
         attackPower: 25,
-        counterAttackPower: 25
+        counterAttackPower: 25,
+        imagePath:"assets/images/darth-maul.jpg"
+
       }
 
     };
   // Next we create a for loop to create crystals for every numberOption.
-  /*for (var i = 0; i < numberOptions.length; i++) {
+  for (var i = 0; i < Object.keys(characters).length; i++) {
 
     // For each iteration, we will create an imageCrystal
     var character = $("<img>");
-
-    // First each crystal will be given the class ".crystal-image".
+    var getCharacterKey = characters[Object.keys(characters)[i]]
+    // First each character will be given the class ".characters".
     // This will allow the CSS to take effect.
     character.addClass("characters");
 
-    // Each imageCrystal will be given a src link to the crystal image
-    character.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+    // Each character will be given a src link to a respective character image
+    character.attr("src", getCharacterKey.imagePath);
 
-    // Each imageCrystal will be given a data attribute called data-crystalValue.
+    // Each imageCrystal will be given attributes
     // This data attribute will be set equal to the array value.
-    character.attr("data-healthpoints", healthPoints[i]);
-    character.attr("data-attackpower", attackPower[i]);
-    character.attr("data-counterattackpower", numberOptions[i]);
+    character.attr("data-healthpoints", getCharacterKey.healthPoints);
+    character.attr("data-attackpower", getCharacterKey.attackPower);
+    character.attr("data-counterattackpower", getCharacterKey.counterAttackPower);
 
     var stringID = "#crystal-image"+(i+1);
     // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
     $(stringID).append(character);
-  }*/
+  }
 
 
   console.log("monkey")
@@ -219,6 +224,7 @@ var inBattle = 0;
       console.log("attacking")
     }
   }
+
 
 </script> 
 </body>
