@@ -99,6 +99,8 @@ window.onload = function() {
   $("#crystal-image2").click(selectEnemy);
 
   $("#crystal-image3").click(battling);
+
+  $(".characters").click(buttontest);
 };
 
 var characterSelected = 0;
@@ -136,7 +138,7 @@ var inBattle = 0;
 
     var darthMaul = {
       name: "Darth Maul",
-      health: 180,
+      healthPoints: 180,
       attackPower: 25,
       counterAttackPower: 25
     };
@@ -144,28 +146,28 @@ var inBattle = 0;
     var characters = {
       char1: {
         name: "Obi-Wan Kenobi",
-        healPoints: 120,
+        healthPoints: 120,
         attackPower: 8,
         counterAttackPower: 8,
         imagePath:"assets/images/obi-wan-kenobi.jpg"
       },
       char2: {
         name: "Luke Skywalker",
-        health: 100,
+        healthPoints: 100,
         attackPower: 5,
         counterAttackPower: 5,
         imagePath:"assets/images/luke-skywalker.jpg"
       },
       char3: {
         name: "Darth Sidious",
-        health: 150,
+        healthPoints: 150,
         attackPower: 20,
         counterAttackPower: 20,
         imagePath:"assets/images/darth-sidius.jpg"
       },
       char4: {
         name: "Darth Maul",
-        health: 180,
+        healthPoints: 180,
         attackPower: 25,
         counterAttackPower: 25,
         imagePath:"assets/images/darth-maul.jpg"
@@ -225,6 +227,14 @@ var inBattle = 0;
     }
   }
 
+  function buttontest () {
+    var charHealthPoints=($(this).attr("data-healthpoints"));
+    var charAttackPower=($(this).attr("data-attackpower"));
+    var charCounterAttackPower=($(this).attr("data-counterattackpower"));
+    console.log(charHealthPoints)
+    console.log(charAttackPower)
+    console.log(charCounterAttackPower)
+  }
 
 </script> 
 </body>
