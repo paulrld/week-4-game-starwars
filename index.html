@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6" id="main-sec">
+        <p id="game-name">test</p>
+      </div>
+      <div class="col-md-6" id="main-sec">
+
+      </div>
+    </div>
+    <div class="row">
+      <div id="info" class="col-md-6" id="main-sec">
+
+      </div>
+      <div class="col-md-6" id="main-sec">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3" id="main-sec">
+        <p id="number-guess">2342342</p>
+      </div>
+      <div class="col-md-1" id="main-sec">
+        <span id="wins-losses">Wins: <span id="wins">0</span>  <br>Losses: <span id="losses">0</span></br></span>
+      </div>
+      <div class="col-md-8" id="main-sec">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" id="image-section">
+        <div class="col-sm-3" id="crystal-image1">
+          <p>test</p>
+        </div>
+        <div class="col-sm-3" id="crystal-image2">
+          <p>test</p>
+        </div>
+        <div class="col-sm-3" id="crystal-image3">
+          <p>test</p>
+        </div>
+        <div class="col-sm-3" id="crystal-image4">
+          <p>test</p>
+        </div>
+      </div>
+      <div class="col-md-6" id="main-sec">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3" id="main-sec">
+        <p id="score-header" class="">Your total score is:</p>
+        <p id="score">0</p>
+      </div>
+      <div class="col-md-9" id="main-sec">
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Note that this div is now empty. We will fill it dynamically -->
+  <div id="crystals">
+  </div>
+
+  <!-- JAVASCRIPT  -->
+  <!-- ========================================= -->
+  <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+  <script type="text/javascript">
+
+//  This code will run as soon as the page loads.
+window.onload = function() {
+
+  //  Click events are done for us:
+
+  $("#crystal-image1").click(selectCharacter);
+
+  $("#crystal-image2").click(selectEnemy);
+
+  $("#crystal-image3").click(battling);
+};
+
+var characterSelected = 0;
+var enemySelected = 0;
+var win = 0;
+var lose = 0;
+var inBattle = 0;
+
+
+    //testing playerselected
+    /*var healthPoints = [120, 100, 150, 180];
+    var attackPower = [8,5,20,25]
+    var counterAttackPower = [8,5,20,25]*/
+
+    var obiWanKenobi = {
+      name: "Obi-Wan Kenobi",
+      healthPoints: 120,
+      attackPower: 8,
+      counterAttackPower: 8
+    };
+
+    var lukeSkywalker = {
+      name: "Luke Skywalker",
+      health: 100,
+      attackPower: 5,
+      counterAttackPower: 5
+    };
+
+    var darthSidious = {
+      name: "Darth Sidious",
+      health: 150,
+      attackPower: 20,
+      counterAttackPower: 20
+    };
+
+    var darthMaul = {
+      name: "Darth Maul",
+      health: 180,
+      attackPower: 25,
+      counterAttackPower: 25
+    };
+
+    var characters = {
+      char1: {
+        name: "Obi-Wan Kenobi",
+        healPoints: 120,
+        attackPower: 8,
+        counterAttackPower: 8
+      },
+      char2: {
+        name: "Luke Skywalker",
+        health: 100,
+        attackPower: 5,
+        counterAttackPower: 5
+      },
+      char3: {
+        name: "Darth Sidious",
+        health: 150,
+        attackPower: 20,
+        counterAttackPower: 20
+      },
+      char4: {
+        name: "Darth Maul",
+        health: 180,
+        attackPower: 25,
+        counterAttackPower: 25
+      }
+
+    };
+  // Next we create a for loop to create crystals for every numberOption.
+  /*for (var i = 0; i < numberOptions.length; i++) {
+
+    // For each iteration, we will create an imageCrystal
+    var character = $("<img>");
+
+    // First each crystal will be given the class ".crystal-image".
+    // This will allow the CSS to take effect.
+    character.addClass("characters");
+
+    // Each imageCrystal will be given a src link to the crystal image
+    character.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+
+    // Each imageCrystal will be given a data attribute called data-crystalValue.
+    // This data attribute will be set equal to the array value.
+    character.attr("data-healthpoints", healthPoints[i]);
+    character.attr("data-attackpower", attackPower[i]);
+    character.attr("data-counterattackpower", numberOptions[i]);
+
+    var stringID = "#crystal-image"+(i+1);
+    // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
+    $(stringID).append(character);
+  }*/
+
+
+  console.log("monkey")
+
+  function selectCharacter () {
+    if (characterSelected===0){
+      console.log("setting character to 1")
+      characterSelected = 1;
+      //insert moving stuff for selecting enemies
+      console.log("selected character")
+      console.log("moving enemies for selection")
+    }
+  }
+
+  function selectEnemy () {
+    if (enemySelected===0 && characterSelected === 1) {
+      enemySelected = 1;
+      console.log("move enemy to battle")
+      battling = 1;
+    }
+  }
+
+  function battling () {
+    if (battling===1) {
+      enemySelected = 1;
+      console.log("attacking")
+    }
+  }
+
+</script> 
+</body>
+</html>

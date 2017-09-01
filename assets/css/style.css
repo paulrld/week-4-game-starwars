@@ -1,0 +1,36 @@
+/* p {
+	background-color: red;
+} */
+#game-name {
+	background-color:orange;
+}
+#info {
+	background-color:lightyellow;
+}
+#number-guess {
+	background-color: lightgreen;
+}
+#wins-losses {
+	background-color: skyblue;
+}
+#wins-losses {
+	background-color: skyblue;
+}
+#score-header {
+	background-color: forestgreen;
+}
+#score {
+	background-color: forestgreen;	
+}
+    .crystal-image {
+      height: 50px;
+      
+    }
+    #image-section {
+    	float:left;
+    	margin:0;
+    }
+
+    .crystal-image  {
+    cursor: pointer;
+}
