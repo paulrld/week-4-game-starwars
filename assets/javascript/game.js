@@ -48,6 +48,8 @@ var game = {
   //declare variables used 
   characterSelected: 0,//boolen for checking if a player selected a character
   enemySelected: 0,//boolen for checking if a player selected an enemy
+  win: 0,
+  lose: 0,
   characterChosen: [],//array for storing selected character info. this could have been avoided but i didnt want to rewrite the code
   enemyChosen: [],//array for storing selected enemy. this could have been avoided but i didnt want to rewrite the code
   attackCounter:0,//counter for multiplying base attack power for character
@@ -111,13 +113,16 @@ var game = {
     //style the characters with borders and color
     $(".characterContainer").css("padding","5px");
     $(".characterContainer").css("margin","1px");
+    $(".characterContainer").css("background-color","white");
     $(".characterContainer").css("border-style","solid");
     $(".characterContainer").css("border-color","green");
+
   }
 },
 //resets the game by reseting the inital values to 0 and empty and clearing any html elements
 resetGame: function() {
   //clear the div with id image-section (this div holds any characters to select)
+  $("#your-character").html("")
   $("#image-section").html("")
   //clear the div with id enmies-to-attack(this div holds the characters available to attack)
   $("#enemies-to-attack").html("")
@@ -141,6 +146,9 @@ resetGame: function() {
 
   //renable character selection listener
   $(".characterContainer").click(game.buttontest);
+  //renable attack button listener
+/*  $("#attackButton").click(game.battling);
+*/
 },
 
 grabCharacter:0,//variable to hold the character object that was selected (on click)
@@ -184,19 +192,15 @@ buttontest: function () {
     game.characterChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
 
     //move user character to div with id "your-character"
-/*    getThisCharacter.appendTo("#your-character")
-*/
+    getThisCharacter.appendTo("#your-character")
+
     console.log("moving enemies for selection")
-    //get the number of possible enemies using the siblings function
-    var lengthOfSiblings=getThisCharacter.siblings().length;
-    //iterate through all possible enemies and add class enemy to each
+    
+    //add enemy class for remaining characters for css styling
+    $("#image-section").children().addClass("enemy")
     //move each enemy to the div with id "enemies-to-attack"
-    for (var i = 0; i < lengthOfSiblings; i++) 
-    {
-      console.log(i)
-      $(getThisCharacter.siblings()[0]).addClass("enemy")
-      $(getThisCharacter.siblings()[0]).appendTo("#enemies-to-attack")     
-    }
+    $("#image-section").children().appendTo("#enemies-to-attack")
+
     //after moving the enemies to the enemies area style them with a red backround and black border
     $(".enemy").css("background-color","red");
     $(".enemy").css("border-color","black");
@@ -237,7 +241,7 @@ buttontest: function () {
   resetButton: function () {
     var reset= $('<button id="restartButton">Restart</button>');
     $("#resetButton").prepend(reset);
-    $("#resetButton").click(game.resetGame);
+    $("#restartButton").click(game.resetGame);//enable restartButton
 
   },
 
@@ -256,6 +260,9 @@ buttontest: function () {
   //           a. end game
   battling: function () 
   {
+    //fix for attack running after win.
+    //only attack when user has not win or lost
+  if(game.win===0 && game.lose===0) {
     //attack button pressed but no character is selected
     if (game.characterSelected===0){
       console.log("No character selected")
@@ -295,9 +302,8 @@ buttontest: function () {
         game.battling=0;//no character in arena (they were defeated by player)
 
         $("#resetButton").html("<div>You been defeated...GAME OVER!!!!</div>");
-
+        game.lose=1;
         game.resetButton();//create resetButton dynamically after lose
-        $("#restartButton").click(game.resetGame);//enable restartButton
         return//exist this function (ignore the reset of the code in the function)
       }
 
@@ -314,6 +320,7 @@ buttontest: function () {
         if(game.enemiesDefeatedCounter>=Object.keys(game.characters).length-1) 
         {
           $("#resetButton").html("<div>You Won!!!! GAME OVER!!!</div>");
+          game.win=1;
           game.resetButton();//create resetButton dynamically after win
         }
         //there are still enemies remaining inform user to select another enemy
@@ -334,6 +341,7 @@ buttontest: function () {
         $("#resetButton").html("You attacked " + game.enemyChosen[0] + " for " +characterAttackPower + " damage<br>" + game.enemyChosen[0] + " attacked you back for " + enemyCounterAttackPower + " damage.</br>");
       }
     }
+   }  
   }
 }
 game.createAttributes()//start the game

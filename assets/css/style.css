@@ -1,37 +1,23 @@
 /* p {
-	background-color: red;
+background-color: red;
 } */
+body {
+    background-image: url("../images/X-wing_SWB.png");
+    background-size: 80%
+}
 #game-name {
-	background-color:orange;
+    float:right;
 }
-#info {
-	background-color:lightyellow;
-}
-#number-guess {
-	background-color: lightgreen;
-}
-#wins-losses {
-	background-color: skyblue;
-}
-#wins-losses {
-	background-color: skyblue;
-}
-#score-header {
-	background-color: forestgreen;
-}
-#score {
-	background-color: forestgreen;	
-}
-    img {
-      height: 100px;
-      
-    }
-    #image-section {
-    	float:left;
-    	margin:0;
-    }
+img {
+    height: 100px;
 
-    .crystal-image  {
+}
+#image-section {
+    float:left;
+    margin:0;
+}
+
+.crystal-image  {
     cursor: pointer;
 }
 .characterContainer {
@@ -40,4 +26,10 @@
 }
 .characterContainer {
     cursor: pointer;
+}
+#resetButton {
+    font-weight: bold
+    color:black;
+    font-size: 20px
+
 }
