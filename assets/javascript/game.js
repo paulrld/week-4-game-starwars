@@ -18,28 +18,28 @@ var game = {
     char1: {
       name: "Obi-Wan Kenobi",
       healthPoints: 120,
-      attackPower: 8,
+      attackPower: 11,
       counterAttackPower: 8,
       imagePath:"assets/images/obi-wan-kenobi.jpg"
     },
     char2: {
       name: "Luke Skywalker",
       healthPoints: 100,
-      attackPower: 5,
-      counterAttackPower: 5,
+      attackPower: 10,
+      counterAttackPower: 10,
       imagePath:"assets/images/luke-skywalker.jpg"
     },
     char3: {
       name: "Darth Sidious",
       healthPoints: 150,
-      attackPower: 20,
+      attackPower: 8,
       counterAttackPower: 20,
       imagePath:"assets/images/darth-sidius.jpg"
     },
     char4: {
       name: "Darth Maul",
       healthPoints: 180,
-      attackPower: 25,
+      attackPower: 4,
       counterAttackPower: 25,
       imagePath:"assets/images/darth-maul.jpg"
 
@@ -338,6 +338,17 @@ buttontest: function () {
       {//health of enemy not yet zero counter attack
         game.characterChosen[1]=charHealthPoints-enemyCounterAttackPower
         $($(game.grabCharacter).children()[2]).html(game.characterChosen[1])// update char hp
+
+        if(game.characterChosen[1]<=0)
+        {
+          console.log("no more hp!")
+          game.battling=0;//no character in arena (they were defeated by player)
+
+          $("#resetButton").html("<div>You been defeated...GAME OVER!!!!</div>");
+          game.lose=1;
+          game.resetButton();//create resetButton dynamically after lose
+          return//exist this function (ignore the reset of the code in the function)
+        }
         $("#resetButton").html("You attacked " + game.enemyChosen[0] + " for " +characterAttackPower + " damage<br>" + game.enemyChosen[0] + " attacked you back for " + enemyCounterAttackPower + " damage.</br>");
       }
     }
