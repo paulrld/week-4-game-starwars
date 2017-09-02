@@ -22,8 +22,8 @@
 #score {
 	background-color: forestgreen;	
 }
-    .characters {
-      height: 50px;
+    img {
+      height: 100px;
       
     }
     #image-section {
@@ -36,4 +36,8 @@
 }
 .characterContainer {
     float:left;
+
+}
+.characterContainer {
+    cursor: pointer;
 }

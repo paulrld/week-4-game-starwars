@@ -46,14 +46,11 @@
 
       </div>
     </div>
-    
-
     <div class="row">
-      <div class="col-md-6" id="crystals">
-
+      <div class="col-md-6" id="your-character">
+        <p>sdfsdf</p>
       </div>
       <div class="col-md-6" id="main-sec">
-
 
       </div>
     </div>
@@ -62,6 +59,15 @@
         <p>Enemies Available To Attack</p>
       </div>
       <div class="col-md-9" id="main-sec">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" id="enemies-to-attack">
+
+      </div>
+      <div class="col-md-6" id="main-sec">
+
 
       </div>
     </div>
@@ -75,7 +81,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3"  id="crystals2">
+      <div class="col-md-3">
         <p>Defender</p>
       </div>
       <div class="col-md-9" id="main-sec">
@@ -83,8 +89,15 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-3"  id="enemy-in-battle">
+      </div>
+      <div class="col-md-9" id="main-sec">
+
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-3"  id="resetButton">
-        <!-- <button id="restartButton">Restart</button> -->
       </div>
       <div class="col-md-9" id="main-sec">
 
@@ -92,233 +105,8 @@
     </div>              
   </div>
 
-  <!-- Note that this div is now empty. We will fill it dynamically -->
-  <!-- <div id="crystals">
-  </div>
-  <div id="crystals2">
-  </div> -->
-
-  <!-- JAVASCRIPT  -->
-  <!-- ========================================= -->
-  <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-
-  <script type="text/javascript">
-
-//  This code will run as soon as the page loads.
-window.onload = function() {
-
-  //  Click events are done for us:
-
-/*  $("#crystal-image1").click(selectCharacter);
-
-  $("#crystal-image2").click(selectEnemy);
-
-  $("#crystal-image3").click(battling);*/
-
-
-  $(".characterContainer").click(game.buttontest);
-  $("#attackButton").click(game.battling);
-
-};
-
-
-var game = {
-  characters: {
-    char1: {
-      name: "Obi-Wan Kenobi",
-      healthPoints: 120,
-      attackPower: 8,
-      counterAttackPower: 8,
-      imagePath:"assets/images/obi-wan-kenobi.jpg"
-    },
-    char2: {
-      name: "Luke Skywalker",
-      healthPoints: 100,
-      attackPower: 5,
-      counterAttackPower: 5,
-      imagePath:"assets/images/luke-skywalker.jpg"
-    },
-    char3: {
-      name: "Darth Sidious",
-      healthPoints: 150,
-      attackPower: 20,
-      counterAttackPower: 20,
-      imagePath:"assets/images/darth-sidius.jpg"
-    },
-    char4: {
-      name: "Darth Maul",
-      healthPoints: 180,
-      attackPower: 25,
-      counterAttackPower: 25,
-      imagePath:"assets/images/darth-maul.jpg"
-
-    }
-  },
-  characterSelected: 0,
-  enemySelected: 0,
-  win: 0,
-  lose: 0,
-  inBattle: 0,
-  characterChosen: [],
-  enemyChosen: [],
-  attackCounter:0,
-  enemiesDefeatedCounter:0,
-  battling:0,
-
-  createAttributes: function () {
-    for (var i = 0; i < Object.keys(game.characters).length; i++) {
-
-    // For each iteration, we will create an imageCrystal
-    var divContainer = $("<div>");
-    var character = $("<img>");
-    var getCharacterKey = game.characters[Object.keys(game.characters)[i]]
-    // First each character will be given the class ".characters".
-    // This will allow the CSS to take effect.
-    divContainer.addClass("characterContainer");
-    character.addClass("characters");
-
-    // Each character will be given a src link to a respective character image
-    character.attr("src", getCharacterKey.imagePath);
-
-    // Each imageCrystal will be given attributes
-    // This data attribute will be set equal to the array value.
-    character.attr("data-name", getCharacterKey.name);
-    character.attr("data-healthpoints", getCharacterKey.healthPoints);
-    character.attr("data-attackpower", getCharacterKey.attackPower);
-    character.attr("data-counterattackpower", getCharacterKey.counterAttackPower);
-
-    var stringID = "#image-section";
-    // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
-    divContainer.append(character)
-    $(stringID).append(divContainer);
-  }
-},
-resetGame: function() {
-  $("#image-section").html("")
-  $("#crystals").html("")
-  $("#crystals2").html("")
-  $("#resetButton").html("")
-  game.createAttributes() 
-  game.characterSelected = 0;
-  game.enemySelected = 0;
-  game.win = 0;
-  game.lose = 0;
-  game.inBattle = 0;
-  game.characterChosen = [];
-  game.enemyChosen = [];
-  game.attackCounter=0;
-  game.enemiesDefeatedCounter = 0;
-  game.battling=0;
+  <script type="text/javascript" src="assets/javascript/game.js"></script>
 
   
-  $(".characterContainer").click(game.buttontest);
-
-
-},
-buttontest: function () {
-
-  var charName=($(this).children().attr("data-name"))
-  var charHealthPoints=($(this).children().attr("data-healthpoints"));
-  var charAttackPower=($(this).children().attr("data-attackpower"));
-  var charCounterAttackPower=($(this).children().attr("data-counterattackpower"));
-/*    console.log(charHealthPoints)
-    console.log(charAttackPower)
-    console.log(charCounterAttackPower)*/
-    console.log($(this))
-    console.log($(this).children())
-    console.log($(this).siblings())
-    /*monkey=$(this)*/
-    var getThisCharacter=$(this)
-
-    
-    /*$(this).siblings()*/
-    /*charHealthPoints++;*/
-    if (game.characterSelected===0){
-      $(this).off('click');
-      console.log("setting character to 1")
-      game.characterSelected = 1;
-      //insert moving stuff for selecting enemies
-      console.log("selected character")
-      game.characterChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
-      console.log("moving enemies for selection")
-      var lengthOfSiblings=getThisCharacter.siblings().length;
-      for (var i = 0; i < lengthOfSiblings; i++) {
-        console.log(i)
-        $(getThisCharacter.siblings()[0]).appendTo("#crystals")
-      }
-    }
-    else if (game.enemySelected===0 && game.characterSelected === 1) {
-      $(this).off('click');
-      game.enemySelected = 1;
-      console.log("move enemy to battle")
-      game.battling = 1;
-      game.enemyChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
-      //enable attack button
-      getThisCharacter.appendTo("#crystals2")
-    }
-  },
-  resetButton: function () {
-    var reset= $('<button id="restartButton">Restart</button>');
-    $("#resetButton").append(reset);
-    $("#resetButton").click(game.resetGame);
-  },
-  battling: function () {
-    if (game.characterSelected===0){
-      console.log("No character selected")
-    }
-    else if (game.enemySelected===0 && game.characterSelected === 1) {
-      console.log("No enemy selected")
-    }
-    else if (game.battling===1) {
-      game.attackCounter++;
-      var charHealthPoints = game.characterChosen[1]
-      var enemyHealthPoints = game.enemyChosen[1]
-      var characterAttackPower = game.characterChosen[2]*game.attackCounter
-      var enemyCounterAttackPower = game.enemyChosen[3]
-
-      game.enemyChosen[1]=enemyHealthPoints-characterAttackPower
-      console.log(game.characterChosen)
-      console.log(game.enemyChosen)
-      console.log("character did " + characterAttackPower + " damage")
-
-      
-      if(game.characterChosen[1]<=0)//character health drops to 0 or less end game
-      {
-        console.log("no more hp!")
-        game.battling=0;
-        game.resetButton();//create resetButton dynamically after lose
-        $("#restartButton").click(game.resetGame);
-      }
-
-      if(game.enemyChosen[1]<=0) {//if health points of enemy drops down to 0
-        game.enemySelected = 0;
-        console.log("choose next enemy")
-        game.enemyChosen = [];
-        $("#crystals2").html("")
-        game.enemiesDefeatedCounter++
-        if(game.enemiesDefeatedCounter>=Object.keys(game.characters).length-1) {
-          game.resetButton();//create resetButton dynamically after lose
-
-        }
-      }
-      else {//health of enemy not yet zero counter attack
-        game.characterChosen[1]=charHealthPoints-enemyCounterAttackPower
-      }
-
-
-
-    }
-  }
-
-}
-game.createAttributes()
-
-
-
-
-
-
-
-</script> 
 </body>
 </html>
