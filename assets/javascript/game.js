@@ -1,19 +1,31 @@
+// You'll want to get in the habit of placing your JS code within a document ready block
+// an iife (immediately invoked function expression) or some other functional context
+// the function you have assigned to window.onload would serve this purpose nicely.
+// The reason for this is to not leak variables onto the global scope.
+// In this case, your game object and all of its methods and info are readily
+// available for a malicious user to tamper with.
 
 //  This code will run as soon as the page loads.
 window.onload = function() {
   //  Click events are done for us:
 
   //button listener for selecting characters for both player and enemy
-  $(".characterContainer").click(game.buttontest);
+  // By using this syntax when setting an event listener, you don't need to continue
+  // to reset the listener everytime you reset the game with new character divs.
+  // This is because you place the listener on a parent element that isn't being removed
+  $(".container-fluid").on("click", ".characterContainer", game.buttontest);
 
   //attack button listener
   $("#attackButton").click(game.battling);
 
 };
 
+// I really like this approach of storing everything in one big game object 👌
 //object for the game!
 var game = {
   //declare 4 characters to choose from
+  // since `characters` is referring to a list of character objects I think 
+  // it would be more appropriate to make this an array instead of an object.
   characters: {
     char1: {
       name: "Obi-Wan Kenobi",
@@ -46,8 +58,8 @@ var game = {
     }
   },
   //declare variables used 
-  characterSelected: 0,//boolen for checking if a player selected a character
-  enemySelected: 0,//boolen for checking if a player selected an enemy
+  characterSelected: 0,//boolean for checking if a player selected a character
+  enemySelected: 0,//boolean for checking if a player selected an enemy
   win: 0,
   lose: 0,
   characterChosen: [],//array for storing selected character info. this could have been avoided but i didnt want to rewrite the code
@@ -58,6 +70,7 @@ var game = {
 
   //create characters and their stats
   createAttributes: function () {
+    // if characters was an array, this looping logic would be a little bit cleaner
     for (var i = 0; i < Object.keys(game.characters).length; i++) {
 
     // For each iteration, we will create players using the chars defined earlier
@@ -144,8 +157,9 @@ resetGame: function() {
   game.enemiesDefeatedCounter = 0;
   game.battling=0;
 
+  // this is no longer necessary with the changes I made to where you first set an event listener.
   //renable character selection listener
-  $(".characterContainer").click(game.buttontest);
+  // $(".characterContainer").click(game.buttontest);
   //renable attack button listener
 /*  $("#attackButton").click(game.battling);
 */
@@ -186,7 +200,10 @@ buttontest: function () {
     //grab selected character object that the character will play
     game.grabCharacter=this;
     game.characterSelected = 1;//player selected a character so set bool value to 1
-    console.log("selected character")
+
+    // console.log's are awesome for validating your work when developing a program
+    // but it's generally best practice to remove them from production code
+    // console.log("selected character")
 
     //store selected character information in an array used for later
     game.characterChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
@@ -194,7 +211,7 @@ buttontest: function () {
     //move user character to div with id "your-character"
     getThisCharacter.appendTo("#your-character")
 
-    console.log("moving enemies for selection")
+    // console.log("moving enemies for selection")
     
     //add enemy class for remaining characters for css styling
     $("#image-section").children().addClass("enemy")
@@ -219,7 +236,7 @@ buttontest: function () {
     //store selected enemy information in an array used for later
     game.enemyChosen.push(charName,charHealthPoints,charAttackPower,charCounterAttackPower)
 
-    console.log("moving enemy to battle")
+    // console.log("moving enemy to battle")
     //move selected enemy to battle arena
     getThisCharacter.appendTo("#enemy-in-battle")
     //create class battling for this character used for css styling
@@ -265,14 +282,14 @@ buttontest: function () {
   if(game.win===0 && game.lose===0) {
     //attack button pressed but no character is selected
     if (game.characterSelected===0){
-      console.log("No character selected")
+      // console.log("No character selected")
       //display to user that no character is selected
       $("#resetButton").html("No character selected.")
 
     }
     //character selected but no enemy is selected
     else if (game.enemySelected===0 && game.characterSelected === 1) {
-      console.log("No enemy selected")
+      // console.log("No enemy selected")
       //display to user that no enemy is selected
       $("#resetButton").html("No enemy here.")
     }
@@ -289,8 +306,8 @@ buttontest: function () {
 
       //decrease enemy health using characters attack power
       game.enemyChosen[1]=enemyHealthPoints-characterAttackPower
-      console.log(game.characterChosen)
-      console.log(game.enemyChosen)
+      // console.log(game.characterChosen)
+      // console.log(game.enemyChosen)
 
       //update the hp of the enemy in the battle arena
       $($(game.grabBattling).children()[2]).html(game.enemyChosen[1])
@@ -298,7 +315,7 @@ buttontest: function () {
       //character health drops to 0 or less end the game
       if(game.characterChosen[1]<=0)
       {
-        console.log("no more hp!")
+        // console.log("no more hp!")
         game.battling=0;//no character in arena (they were defeated by player)
 
         $("#resetButton").html("<div>You been defeated...GAME OVER!!!!</div>");
@@ -311,7 +328,7 @@ buttontest: function () {
       if(game.enemyChosen[1]<=0) 
       {
         game.enemySelected = 0;
-        console.log("choose next enemy")
+        // console.log("choose next enemy")
         game.enemyChosen = [];//clear enemy data because they died
         $("#enemy-in-battle").html("")//clear the enemy on the page because they died
         game.enemiesDefeatedCounter++//increase the number enemies defeated
@@ -341,7 +358,7 @@ buttontest: function () {
 
         if(game.characterChosen[1]<=0)
         {
-          console.log("no more hp!")
+          // console.log("no more hp!")
           game.battling=0;//no character in arena (they were defeated by player)
 
           $("#resetButton").html("<div>You been defeated...GAME OVER!!!!</div>");
